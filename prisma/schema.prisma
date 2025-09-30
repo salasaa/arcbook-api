@@ -20,11 +20,8 @@ model Product {
   category    String
   description String?
   imageUrl    String
-  rating      Int?
   inStock     Boolean
   publishYear Int
-  chapters    Int?
-  volumes     Int?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
