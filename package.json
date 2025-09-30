@@ -2,10 +2,23 @@
   "name": "arcbook-api",
   "scripts": {
     "dev": "bun run --hot src/index.ts",
-    "start": "bun run src/index.ts"
+    "build": "bun install",
+    "start": "bun run src/index.ts",
+    "docker:up": "docker compose up -d",
+    "db:up": "docker compose up -d",
+    "db:migrate": "prisma migrate dev",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:gen": "prisma generate --no-hints",
+    "db:seed": "prisma db seed",
+    "db:studio": "prisma studio --browser none",
+    "db:reset": "prisma migrate reset --skip-seed"
   },
   "dependencies": {
-    "hono": "^4.9.9"
+    "@prisma/client": "^6.16.3",
+    "@types/node": "^24.6.0",
+    "hono": "^4.9.9",
+    "prisma": "^6.16.3",
+    "typescript": "^5.9.2"
   },
   "devDependencies": {
     "@types/bun": "latest"
