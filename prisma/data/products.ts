@@ -1,11 +1,24 @@
-export const dataProducts = [
+type Product = {
+  slug: string;
+  title: string;
+  author: string;
+  price: number;
+  originalPrice: number;
+  categorySlug: string;
+  description?: string;
+  imageUrl: string;
+  inStock: boolean;
+  publishYear: number;
+};
+
+export const dataProducts: Product[] = [
   {
     slug: "one-piece-vol-90",
     title: "One Piece Vol. 90",
     author: "Eiichiro Oda",
     price: 99000,
     originalPrice: 189000,
-    category: "Comics",
+    categorySlug: "Comics",
     description:
       "The Straw Hat Pirates continue their adventures in the Wano Country arc, facing off against the powerful Beast Pirates and their leader, Kaido.",
     imageUrl:
@@ -19,7 +32,7 @@ export const dataProducts = [
     author: "Eiichiro Oda",
     price: 65900,
     originalPrice: 89900,
-    category: "Comics",
+    categorySlug: "Comics",
     description:
       "Whole Cake Island, in this arc, Luffy sneaks onto Big Mom's island to rescue Sanji.",
     imageUrl:
