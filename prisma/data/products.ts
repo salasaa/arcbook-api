@@ -18,7 +18,7 @@ export const dataProducts: Product[] = [
     author: "Eiichiro Oda",
     price: 99000,
     originalPrice: 189000,
-    categorySlug: "Comics",
+    categorySlug: "comics",
     description:
       "The Straw Hat Pirates continue their adventures in the Wano Country arc, facing off against the powerful Beast Pirates and their leader, Kaido.",
     imageUrl:
@@ -32,7 +32,7 @@ export const dataProducts: Product[] = [
     author: "Eiichiro Oda",
     price: 65900,
     originalPrice: 89900,
-    categorySlug: "Comics",
+    categorySlug: "comics",
     description:
       "Whole Cake Island, in this arc, Luffy sneaks onto Big Mom's island to rescue Sanji.",
     imageUrl:
@@ -46,7 +46,7 @@ export const dataProducts: Product[] = [
     author: "Dr. Muhammad Faisal",
     price: 99000,
     originalPrice: 99000,
-    categorySlug: "Fiction",
+    categorySlug: "fiction",
     description:
       "Buku Generasi kembali ke akar ini sangat layak untuk didiskusikan, karena diskusi tentang generasi terus berkembang bagaikan bola salju yang bergulir liar. Generasi milenial dimulai dari 1981 hingga 2000 an. Konon mereka memiliki karakteristik kreatif dan inovatif, rasa sosial yang tinggi, menyukai nilai-nilai kebebasan, dan senang dengan suatu hal yang instan. Istilah generasi milenial sudah akrab terdengar di Indonesia sejak lama.",
     imageUrl:
@@ -60,7 +60,7 @@ export const dataProducts: Product[] = [
     author: "Grant Snider",
     price: 93750,
     originalPrice: 125000,
-    categorySlug: "Fiction",
+    categorySlug: "fiction",
     description:
       "The Art of Living fokus pada warna-warni kehidupan yang penuh empati, relaksasi, rasa syukur, dan mindfulness. Inilah tema-tema yang Snider eksplorasi untuk kita yang membutuhkan sedikit refleksi, harapan, dan angin segar dalam menjalani hiruk pikuk kehidupan.",
     imageUrl:
@@ -74,7 +74,7 @@ export const dataProducts: Product[] = [
     author: "T. A. S. A.",
     price: 63750,
     originalPrice: 85000,
-    categorySlug: "Fiction",
+    categorySlug: "fiction",
     description:
       "Dalam bahasa Ibrani. menikmati bencana orang lain disebut simcha la-ed. Sementara. dalam bahasa Jerman. Itu disebut schadenfreude—dari kata Schaden yang berarti kerusakan atau cedera dan freude yang berarti sukacita atau kenikmatan: sukacita atas kerusakan.",
     imageUrl:
@@ -88,7 +88,7 @@ export const dataProducts: Product[] = [
     author: "Guru Gembul",
     price: 130000,
     originalPrice: 130000,
-    categorySlug: "Non-Fiction",
+    categorySlug: "non-fiction",
     description:
       "Melalui buku Beyond Belief: Fact or Fiction ini, Pak Guru Gembul mengajak kita berbicara hal-hal yang bernuansa teori konspirasi dan supranatural secara lebih bertanggung jawab, baik dari sisi sumber rujukan, pengambilan kesimpulan, hingga konsekuensinya dalam kehidupan sehari-hari.",
     imageUrl:
