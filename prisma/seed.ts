@@ -23,7 +23,11 @@ async function seedProducts() {
     await prisma.product.upsert({
       where: { slug: dataProduct.slug },
       update: { ...product },
-      create: { ...product },
+      create: {
+        ...product,
+        description: product.description ?? "No description",
+        category: { connect: { slug: categorySlug.toLowerCase() } },
+      },
     });
   }
 }
