@@ -21,17 +21,12 @@ async function seedProducts() {
     const { categorySlug, ...product } = dataProduct;
 
     await prisma.product.upsert({
-      where: { slug: dataProduct.slug }, // Cari berdasarkan slug
+      where: { slug: dataProduct.slug },
       update: {
-        // properti yang ingin diupdate jika ditemukan
-        slug: product.slug,
-        price: product.price,
-        // ...
+        ...product,
       },
       create: {
-        // properti yang akan dibuat jika tidak ditemukan
         ...product,
-        // ... relasi connect ke category ...
       },
     });
   }
