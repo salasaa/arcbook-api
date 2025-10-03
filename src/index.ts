@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { prisma } from "./lib/prisma";
+import { db } from "./lib/db";
 
 const app = new Hono();
 
@@ -10,13 +10,13 @@ app.get("/", (c) => {
 });
 
 app.get("/products", async (c) => {
-  const products = await prisma.product.findMany();
+  const products = await db.product.findMany();
   return c.json(products);
 });
 
 app.get("/products/:slug", async (c) => {
   const slug = c.req.param("slug");
-  const product = await prisma.product.findUnique({
+  const product = await db.product.findUnique({
     where: { slug },
   });
 
@@ -27,7 +27,7 @@ app.get("/products/:slug", async (c) => {
 
 app.get("products/category/:categorySlug", async (c) => {
   const categorySlug = c.req.param("categorySlug");
-  const products = await prisma.product.findMany({
+  const products = await db.product.findMany({
     where: { category: { slug: categorySlug } },
     include: { category: true },
   });
@@ -36,5 +36,24 @@ app.get("products/category/:categorySlug", async (c) => {
 
   return c.json(products);
 });
+
+// app.post("/products", async (c) => {
+//   const body = await c.req.json();
+
+//   const newProduct = await db.product.create({
+//     data: {
+//       slug: body.slug,
+//       title: body.title,
+//       author: body.author,
+//       description: body.description,
+//       price: body.price,
+//       originalPrice: body.originalPrice,
+//       imageUrl: body.imageUrl,
+//       inStock: body.inStock,
+//       publishYear: body.publishYear,
+//       category: { connect: { slug: body.categorySlug } },
+//     },
+//   });
+// });
 
 export default app;

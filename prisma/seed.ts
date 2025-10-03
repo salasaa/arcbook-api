@@ -22,12 +22,8 @@ async function seedProducts() {
 
     await prisma.product.upsert({
       where: { slug: dataProduct.slug },
-      update: {
-        ...product,
-      },
-      create: {
-        ...product,
-      },
+      update: { ...product },
+      create: { ...product },
     });
   }
 }
