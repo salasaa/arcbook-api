@@ -11,11 +11,11 @@ datasource db {
 model Product {
   id String @id @default(ulid())
 
-  slug          String @unique
+  slug          String  @unique
   title         String
   author        String
-  price         Int
-  originalPrice Int
+  price         Decimal @db.Decimal(10, 2)
+  originalPrice Decimal @db.Decimal(10, 2)
 
   categorySlug String?
 
