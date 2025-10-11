@@ -1,7 +1,13 @@
 import { Hono } from "hono";
+import { cors } from "hono/cors";
 import { db } from "./lib/db";
 
-const app = new Hono();
+import { createRoute, OpenAPIHono } from "@hono/zod-openapi";
+import { ProductsSchema } from "./modules/product/schema";
+
+const app = new OpenAPIHono();
+
+app.use(cors());
 
 app.get("/", (c) => {
   return c.json({
@@ -9,10 +15,27 @@ app.get("/", (c) => {
   });
 });
 
-app.get("/products", async (c) => {
-  const products = await db.product.findMany();
-  return c.json(products);
-});
+app.openapi(
+  createRoute({
+    method: "get",
+    path: "/products",
+    responses: {
+      200: {
+        content: { "application/json": { schema: ProductsSchema } },
+        description: "Get all products",
+      },
+    },
+  }),
+  async (c) => {
+    const products = await db.product.findMany();
+    const formattedProducts = products.map((product) => ({
+      ...product,
+      price: product.price.toNumber(),
+      originalPrice: product.originalPrice.toNumber(),
+    }));
+    return c.json(formattedProducts);
+  }
+);
 
 app.get("/products/:slug", async (c) => {
   const slug = c.req.param("slug");
@@ -90,6 +113,15 @@ app.patch("/products/:slug", async (c) => {
   });
 
   return c.json(updatedProduct);
+});
+
+// The OpenAPI documentation
+app.doc("/openapi.json", {
+  openapi: "3.0.0",
+  info: {
+    title: "Arcbooks API",
+    version: "1.0.0",
+  },
 });
 
 export default app;
