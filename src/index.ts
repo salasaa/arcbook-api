@@ -1,20 +1,15 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-import { db } from "./lib/db";
-
+import { Scalar } from "@scalar/hono-api-reference";
 import { createRoute, OpenAPIHono } from "@hono/zod-openapi";
+import { db } from "./lib/db";
 import { ProductsSchema } from "./modules/product/schema";
 
 const app = new OpenAPIHono();
 
 app.use(cors());
 
-app.get("/", (c) => {
-  return c.json({
-    message: "Arcbook Backend REST API!",
-  });
-});
-
+// GET all products
 app.openapi(
   createRoute({
     method: "get",
@@ -123,5 +118,8 @@ app.doc("/openapi.json", {
     version: "1.0.0",
   },
 });
+
+// Use the middleware to serve the Scalar API Reference at /scalar
+app.get("/", Scalar({ url: "/openapi.json" }));
 
 export default app;
