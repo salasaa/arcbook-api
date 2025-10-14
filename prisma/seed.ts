@@ -8,9 +8,9 @@ import { dataCategories } from "./data/categories";
 
 async function seedCategories() {
   await prisma.category.createMany({
-    data: dataCategories.map((x) => ({
-      name: x.name,
-      slug: x.slug.toLowerCase(),
+    data: dataCategories.map((category) => ({
+      name: category.name,
+      slug: category.slug.toLowerCase(),
     })),
     skipDuplicates: true,
   });
@@ -20,14 +20,16 @@ async function seedProducts() {
   for (const dataProduct of dataProducts) {
     const { categorySlug, ...product } = dataProduct;
 
+    const upsertQuery = {
+      ...product,
+      description: product.description ?? "No description",
+      category: { connect: { slug: categorySlug.toLowerCase() } },
+    };
+
     await prisma.product.upsert({
       where: { slug: dataProduct.slug },
-      update: { ...product },
-      create: {
-        ...product,
-        description: product.description ?? "No description",
-        category: { connect: { slug: categorySlug.toLowerCase() } },
-      },
+      update: upsertQuery,
+      create: upsertQuery,
     });
   }
 }
