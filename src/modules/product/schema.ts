@@ -7,7 +7,7 @@ export const ProductSchema = z.object({
   author: z.string(),
   price: z.number(),
   originalPrice: z.number(),
-  categorySlug: z.string().nullable(),
+  categoryId: z.string().nullable(),
   description: z.string().nullable(),
   imageUrl: z.string(),
   inStock: z.boolean(),

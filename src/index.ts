@@ -1,4 +1,3 @@
-import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { Scalar } from "@scalar/hono-api-reference";
 import { createRoute, OpenAPIHono } from "@hono/zod-openapi";
@@ -23,11 +22,13 @@ app.openapi(
   }),
   async (c) => {
     const products = await db.product.findMany();
-    const formattedProducts = products.map((product) => ({
-      ...product,
-      price: product.price.toNumber(),
-      originalPrice: product.originalPrice.toNumber(),
-    }));
+    const formattedProducts = products.map((product) => {
+      return {
+        ...product,
+        price: product.price.toNumber(),
+        originalPrice: product.originalPrice.toNumber(),
+      };
+    });
     return c.json(formattedProducts);
   }
 );
@@ -43,7 +44,7 @@ app.get("/products/:slug", async (c) => {
   return c.json(product);
 });
 
-app.get("products/category/:categorySlug", async (c) => {
+app.get("/categories/:categorySlug", async (c) => {
   const categorySlug = c.req.param("categorySlug");
   const products = await db.product.findMany({
     where: { category: { slug: categorySlug } },
@@ -79,17 +80,13 @@ app.post("/products", async (c) => {
 app.delete("/products/:slug", async (c) => {
   const slug = c.req.param("slug");
 
-  const isProduct = await db.product.delete({ where: { slug } });
+  const deletedProduct = await db.product.delete({ where: { slug } });
 
-  if (!isProduct) {
-    return c.notFound();
-  }
-
-  return c.json({ isProduct: { slug }, message: "deleted successfully" });
+  return c.json({ deletedProduct: { slug }, message: "deleted successfully" });
 });
 
 app.patch("/products/:slug", async (c) => {
-  const slug = await c.req.param("slug");
+  const slug = c.req.param("slug");
   const body = await c.req.json();
 
   const updatedProduct = await db.product.update({
@@ -120,6 +117,12 @@ app.doc("/openapi.json", {
 });
 
 // Use the middleware to serve the Scalar API Reference at /scalar
-app.get("/", Scalar({ url: "/openapi.json" }));
+app.get(
+  "/",
+  Scalar({
+    pageTitle: "Arcbooks API",
+    url: "/openapi.json",
+  })
+);
 
 export default app;
