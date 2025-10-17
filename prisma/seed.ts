@@ -28,10 +28,12 @@ async function seedAuthors() {
 
 async function seedProducts() {
   for (const dataProduct of dataProducts) {
-    const { categorySlug, authorSlug, ...product } = dataProduct;
+    const { categorySlug, authorSlug, ...productBase } = dataProduct;
 
     const upsertQuery = {
-      ...product,
+      ...productBase,
+      author: { connect: { slug: authorSlug.toLocaleLowerCase() } },
+      category: { connect: { slug: categorySlug.toLocaleLowerCase() } },
     };
 
     await prisma.product.upsert({
@@ -43,8 +45,8 @@ async function seedProducts() {
 }
 
 async function main() {
-  await seedCategories();
   await seedAuthors();
+  await seedCategories();
   await seedProducts();
 }
 
