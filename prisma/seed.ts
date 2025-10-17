@@ -3,8 +3,8 @@ import { PrismaClient } from "../src/generated/prisma";
 const prisma = new PrismaClient();
 
 import { dataProducts } from "./data/products";
-
 import { dataCategories } from "./data/categories";
+import { dataAuthors } from "./data/authors";
 
 async function seedCategories() {
   await prisma.category.createMany({
@@ -16,14 +16,22 @@ async function seedCategories() {
   });
 }
 
+async function seedAuthors() {
+  await prisma.author.createMany({
+    data: dataAuthors.map((author) => ({
+      name: author.name,
+      slug: author.slug.toLocaleLowerCase(),
+    })),
+    skipDuplicates: true,
+  });
+}
+
 async function seedProducts() {
   for (const dataProduct of dataProducts) {
-    const { categorySlug, ...product } = dataProduct;
+    const { categorySlug, authorSlug, ...product } = dataProduct;
 
     const upsertQuery = {
       ...product,
-      description: product.description ?? "No description",
-      category: { connect: { slug: categorySlug.toLowerCase() } },
     };
 
     await prisma.product.upsert({
@@ -36,6 +44,7 @@ async function seedProducts() {
 
 async function main() {
   await seedCategories();
+  await seedAuthors();
   await seedProducts();
 }
 
