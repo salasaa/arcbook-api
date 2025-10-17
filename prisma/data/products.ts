@@ -1,7 +1,7 @@
 type Product = {
   slug: string;
   title: string;
-  author: string;
+  authorSlug: string;
   price: number;
   originalPrice: number;
   categorySlug: string;
@@ -15,7 +15,7 @@ export const dataProducts: Product[] = [
   {
     slug: "one-piece-vol-90",
     title: "One Piece Vol. 90",
-    author: "Eiichiro Oda",
+    authorSlug: "eiichiro-oda",
     price: 99000,
     originalPrice: 189000,
     categorySlug: "comics",
@@ -29,7 +29,7 @@ export const dataProducts: Product[] = [
   {
     slug: "one-piece-vol-82",
     title: "One Piece Vol. 82",
-    author: "Eiichiro Oda",
+    authorSlug: "eiichiro-oda",
     price: 65900,
     originalPrice: 89900,
     categorySlug: "comics",
@@ -43,7 +43,7 @@ export const dataProducts: Product[] = [
   {
     slug: "generasi-kembali-ke-akar",
     title: "Generasi Kembali ke Akar",
-    author: "Dr. Muhammad Faisal",
+    authorSlug: "dr-Muhammad-faisal",
     price: 99000,
     originalPrice: 99000,
     categorySlug: "fiction",
@@ -57,7 +57,7 @@ export const dataProducts: Product[] = [
   {
     slug: "the-art-of-living",
     title: "The Art of Living",
-    author: "Grant Snider",
+    authorSlug: "grant-snider",
     price: 93750,
     originalPrice: 125000,
     categorySlug: "fiction",
@@ -71,7 +71,7 @@ export const dataProducts: Product[] = [
   {
     slug: "schadenfreude-mengapa-kita-senang-melihat-orang-lain-susah",
     title: "Schadenfreude: Mengapa Kita Senang Melihat Orang Lain Susah",
-    author: "T. A. S. A.",
+    authorSlug: "t-a-s-a",
     price: 63750,
     originalPrice: 85000,
     categorySlug: "fiction",
@@ -85,7 +85,7 @@ export const dataProducts: Product[] = [
   {
     slug: "beyond-belief-fact-or-fiction",
     title: "Beyond Belief: Fact or Fiction",
-    author: "Guru Gembul",
+    authorSlug: "guru-gembul",
     price: 130000,
     originalPrice: 130000,
     categorySlug: "non-fiction",

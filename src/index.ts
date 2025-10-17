@@ -21,12 +21,15 @@ app.openapi(
     },
   }),
   async (c) => {
-    const products = await db.product.findMany();
+    const products = await db.product.findMany({
+      include: {
+        category: true,
+        author: true,
+      },
+    });
     const formattedProducts = products.map((product) => {
       return {
         ...product,
-        price: product.price.toNumber(),
-        originalPrice: product.originalPrice.toNumber(),
       };
     });
     return c.json(formattedProducts);
