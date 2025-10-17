@@ -21,7 +21,12 @@ app.openapi(
     },
   }),
   async (c) => {
-    const products = await db.product.findMany();
+    const products = await db.product.findMany({
+      include: {
+        category: true,
+        // TODO: author: true when the relation has been made
+      },
+    });
     const formattedProducts = products.map((product) => {
       return {
         ...product,
@@ -33,6 +38,7 @@ app.openapi(
   }
 );
 
+// TODO: OpenAPI
 app.get("/products/:slug", async (c) => {
   const slug = c.req.param("slug");
   const product = await db.product.findUnique({
@@ -44,6 +50,7 @@ app.get("/products/:slug", async (c) => {
   return c.json(product);
 });
 
+// TODO: OpenAPI
 app.get("/categories/:categorySlug", async (c) => {
   const categorySlug = c.req.param("categorySlug");
   const products = await db.product.findMany({
@@ -56,11 +63,13 @@ app.get("/categories/:categorySlug", async (c) => {
   return c.json(products);
 });
 
+// TODO: OpenAPI
 app.post("/products", async (c) => {
   const body = await c.req.json();
 
   const newProduct = await db.product.create({
     data: {
+      // TODO: refactor with function, or use slugify
       slug: body.slug ?? body.title.toLowerCase().replace(/\s+/g, "-"),
       title: body.title,
       author: body.author,
@@ -77,6 +86,7 @@ app.post("/products", async (c) => {
   return c.json(newProduct, 201);
 });
 
+// TODO: OpenAPI
 app.delete("/products/:slug", async (c) => {
   const slug = c.req.param("slug");
 
@@ -85,6 +95,7 @@ app.delete("/products/:slug", async (c) => {
   return c.json({ deletedProduct: { slug }, message: "deleted successfully" });
 });
 
+// TODO: OpenAPI
 app.patch("/products/:slug", async (c) => {
   const slug = c.req.param("slug");
   const body = await c.req.json();
