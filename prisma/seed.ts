@@ -29,11 +29,17 @@ async function seedAuthors() {
 async function seedProducts() {
   for (const dataProduct of dataProducts) {
     const { categorySlug, authorSlug, ...productBase } = dataProduct;
+    const author = await prisma.author.findUniqueOrThrow({
+      where: { slug: authorSlug.toLocaleLowerCase() },
+    });
+    const category = await prisma.category.findUniqueOrThrow({
+      where: { slug: categorySlug.toLocaleLowerCase() },
+    });
 
     const upsertQuery = {
       ...productBase,
-      author: { connect: { slug: authorSlug.toLocaleLowerCase() } },
-      category: { connect: { slug: categorySlug.toLocaleLowerCase() } },
+      authorId: author.id,
+      categoryId: category.id,
     };
 
     await prisma.product.upsert({

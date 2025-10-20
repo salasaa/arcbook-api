@@ -2,7 +2,7 @@ import { z } from "@hono/zod-openapi";
 
 export const ProductSchema = z.object({
   id: z.string(),
-  slug: z.string(),
+  slug: z.string().nullable(),
   title: z.string(),
   authorId: z.string().nullable(),
   price: z.number(),
@@ -18,3 +18,21 @@ export const ProductSchema = z.object({
 });
 
 export const ProductsSchema = z.array(ProductSchema);
+
+export const ProductSlugSchema = z.object({
+  slug: z.string().openapi({ example: "product-slug" }),
+});
+
+export const ProductCategorySchema = z.object({
+  categorySlug: z.string().openapi({ example: "category-slug" }),
+});
+
+export const ProductAuthorSchema = z.object({
+  authorSlug: z.string().openapi({ example: "author-slug" }),
+});
+
+export const ProductIdSchema = z.object({
+  id: z.string(),
+});
+
+export const ProductCreateSchema = ProductSchema.omit({ id: true });
