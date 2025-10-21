@@ -10,6 +10,10 @@ app.use(cors());
 
 app.route("/products", productRoute);
 
+// TODO: Separete them all
+// app.route("/categories", categoryRoute);
+// app.route("/authors", authorRoute);
+
 // The OpenAPI documentation
 app.doc("/openapi.json", {
   openapi: "3.0.0",
