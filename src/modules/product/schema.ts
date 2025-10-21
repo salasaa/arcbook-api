@@ -23,14 +23,6 @@ export const ProductSlugSchema = z.object({
   slug: z.string().openapi({ example: "product-slug" }),
 });
 
-export const ProductCategorySchema = z.object({
-  categorySlug: z.string().openapi({ example: "category-slug" }),
-});
-
-export const ProductAuthorSchema = z.object({
-  authorSlug: z.string().openapi({ example: "author-slug" }),
-});
-
 export const ProductIdSchema = z.object({
   id: z.string(),
 });
