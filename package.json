@@ -12,7 +12,8 @@
     "db:gen": "prisma generate --no-hints",
     "db:seed": "prisma db seed",
     "db:studio": "prisma studio --browser none",
-    "db:reset": "prisma migrate reset --skip-seed"
+    "db:reset": "prisma migrate reset --skip-seed",
+    "deploy": "bun prisma migrate deploy && bun db:seed"
   },
   "prisma": {
     "seed": "bun prisma/seed.ts"

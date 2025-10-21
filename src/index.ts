@@ -1,8 +1,8 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
-import { cors } from "hono/cors";
 import { Scalar } from "@scalar/hono-api-reference";
 
 import { productRoute } from "./modules/product/routes";
+import { cors } from "hono/cors";
 
 const app = new OpenAPIHono();
 
