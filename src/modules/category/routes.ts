@@ -2,9 +2,9 @@ import { createRoute, OpenAPIHono } from "@hono/zod-openapi";
 import { CategorySchema, CategorySlugSchema } from "./schema";
 import { db } from "../../lib/db";
 
-export const categoryRoute = new OpenAPIHono();
+export const categoriesRoute = new OpenAPIHono();
 
-categoryRoute.openapi(
+categoriesRoute.openapi(
   createRoute({
     method: "get",
     path: "/{categorySlug}",

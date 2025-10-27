@@ -2,9 +2,9 @@ import { createRoute, OpenAPIHono } from "@hono/zod-openapi";
 import { AuthorSchema, AuthorSlugSchema } from "./schema";
 import { db } from "../../lib/db";
 
-export const authorRoute = new OpenAPIHono();
+export const authorsRoute = new OpenAPIHono();
 
-authorRoute.openapi(
+authorsRoute.openapi(
   createRoute({
     method: "get",
     path: "/{authorSlug}",

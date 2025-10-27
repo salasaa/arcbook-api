@@ -9,7 +9,11 @@ export const UserSchema = z.object({
 
 export const UsersSchema = z.array(UserSchema);
 
-export const RegisterUserSchema = z.object({
+export const RegisterUserSchema = UserSchema.omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+}).extend({
   email: z.string(),
   password: z.string(),
 });

@@ -1,20 +1,22 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { Scalar } from "@scalar/hono-api-reference";
 
-import { productRoute } from "./modules/product/routes";
-import { categoryRoute } from "./modules/category/routes";
-import { authorRoute } from "./modules/author/routes";
-import { userRoute } from "./modules/user/routes";
+import { productsRoute } from "./modules/product/routes";
+import { categoriesRoute } from "./modules/category/routes";
+import { authorsRoute } from "./modules/author/routes";
+import { usersRoute } from "./modules/user/routes";
+import { authRoute } from "./modules/auth/routes";
 import { cors } from "hono/cors";
 
 const app = new OpenAPIHono();
 
 app.use(cors());
 
-app.route("/products", productRoute);
-app.route("/categories", categoryRoute);
-app.route("/authors", authorRoute);
-app.route("/users", userRoute);
+app.route("/products", productsRoute);
+app.route("/categories", categoriesRoute);
+app.route("/authors", authorsRoute);
+app.route("/users", usersRoute);
+app.route("/auth", authRoute);
 
 // The OpenAPI documentation
 app.doc("/openapi.json", {

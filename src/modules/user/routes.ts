@@ -3,10 +3,10 @@ import { UserSchema, UsersSchema } from "../user/schema";
 import { db } from "../../lib/db";
 import { z } from "@hono/zod-openapi";
 
-export const userRoute = new OpenAPIHono();
+export const usersRoute = new OpenAPIHono();
 
 // GET all users
-userRoute.openapi(
+usersRoute.openapi(
   createRoute({
     method: "get",
     path: "/",
@@ -26,7 +26,7 @@ userRoute.openapi(
   }
 );
 
-userRoute.openapi(
+usersRoute.openapi(
   createRoute({
     method: "get",
     path: "/:id",

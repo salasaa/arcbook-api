@@ -2,10 +2,10 @@ import { createRoute, OpenAPIHono } from "@hono/zod-openapi";
 import { ProductSchema, ProductsSchema, ProductSlugSchema } from "./schema";
 import { db } from "../../lib/db";
 
-export const productRoute = new OpenAPIHono();
+export const productsRoute = new OpenAPIHono();
 
 // GET all products
-productRoute.openapi(
+productsRoute.openapi(
   createRoute({
     method: "get",
     path: "/",
@@ -32,7 +32,7 @@ productRoute.openapi(
   }
 );
 
-productRoute.openapi(
+productsRoute.openapi(
   createRoute({
     method: "get",
     path: "/{slug}",
