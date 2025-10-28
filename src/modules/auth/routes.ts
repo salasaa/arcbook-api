@@ -77,11 +77,9 @@ authRoute.openapi(
       return c.json({ message: "Invalid password" }, 400);
     }
 
-    console.log({ user });
+    // TODO: Create token
+    const token = "";
 
-    return c.json({
-      isValid,
-      user,
-    });
+    return c.json(token);
   }
 );
