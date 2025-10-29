@@ -1,7 +1,6 @@
 import { createRoute, OpenAPIHono } from "@hono/zod-openapi";
-import { UserSchema, UsersSchema } from "../user/schema";
+import { UserSchema, UsersSchema, UserIdParamSchema } from "../user/schema";
 import { db } from "../../lib/db";
-import { z } from "@hono/zod-openapi";
 
 export const usersRoute = new OpenAPIHono();
 
@@ -29,8 +28,8 @@ usersRoute.openapi(
 usersRoute.openapi(
   createRoute({
     method: "get",
-    path: "/:id",
-    request: { params: z.object({ id: z.string() }) },
+    path: "/{id}",
+    request: { params: UserIdParamSchema },
     responses: {
       200: {
         description: "Get one user by id",
