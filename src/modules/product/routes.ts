@@ -35,7 +35,7 @@ productsRoute.openapi(
 productsRoute.openapi(
   createRoute({
     method: "get",
-    path: "/{slug}",
+    path: "/{productSlug}",
     request: { params: ProductSlugSchema },
     responses: {
       200: {
