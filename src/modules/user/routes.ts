@@ -25,6 +25,7 @@ usersRoute.openapi(
   }
 );
 
+// GET user by
 usersRoute.openapi(
   createRoute({
     method: "get",

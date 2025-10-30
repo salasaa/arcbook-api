@@ -8,10 +8,12 @@ import {
 } from "../user/schema";
 import { hashPassword, verifyPassword } from "../../lib/password";
 import { sign, verify } from "hono/jwt";
+import { signToken } from "../../lib/token";
+import { checkAuthorized } from "./middleware";
 
 export const authRoute = new OpenAPIHono();
 
-// Register
+// POST /register
 authRoute.openapi(
   createRoute({
     method: "post",
@@ -48,7 +50,7 @@ authRoute.openapi(
   }
 );
 
-// Login
+// POST /login
 authRoute.openapi(
   createRoute({
     method: "post",
@@ -58,11 +60,10 @@ authRoute.openapi(
     },
     responses: {
       200: {
-        content: { "application/json": { schema: LoginResponseSchema } },
+        content: { "text/plain": { schema: LoginResponseSchema } },
         description: "Successfully Logged In",
       },
       400: { description: "Failed to Login" },
-      404: { description: "User not found" },
     },
   }),
   async (c) => {
@@ -82,21 +83,31 @@ authRoute.openapi(
         return c.json({ message: "User doesn't have a password" }, 400);
       }
 
-      const isValid = await verifyPassword(user.password.hash, body.password);
-      if (!isValid) {
-        return c.json({ message: "Invalid password" }, 400);
-      }
-
-      const payload = {
-        sub: user.id,
-        exp: Math.floor(Date.now() / 1000) + 60 * 5,
-      };
-      const tokenSecretKey = String(process.env.TOKEN_SECRET_KEY);
-      const token = await sign(payload, tokenSecretKey);
+      const token = await signToken(user.id);
 
       return c.text(token);
     } catch (error) {
       return c.json({ message: "Email or password is incorrect" }, 400);
     }
+  }
+);
+
+// GET /me - Get current user
+authRoute.openapi(
+  createRoute({
+    method: "get",
+    path: "/me",
+    middleware: checkAuthorized,
+    responses: {
+      200: {
+        description: "Get authenticated user",
+        content: { "application/json": { schema: UserSchema } },
+      },
+    },
+  }),
+  async (c) => {
+    const user = c.get("user");
+
+    return c.json(user);
   }
 );
