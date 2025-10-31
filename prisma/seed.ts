@@ -31,7 +31,6 @@ async function seedProducts() {
     const { categorySlug, authorSlug, ...productBase } = dataProduct;
 
     try {
-      // Coba temukan Author dan Category. findUniqueOrThrow akan throw jika tidak ditemukan.
       const author = await prisma.author.findUniqueOrThrow({
         where: { slug: authorSlug.toLocaleLowerCase() },
       });
@@ -45,20 +44,21 @@ async function seedProducts() {
         categoryId: category.id,
       };
 
-      await prisma.product.upsert({
+      const product = await prisma.product.upsert({
         where: { slug: dataProduct.slug },
         update: upsertQuery,
         create: upsertQuery,
       });
+
+      console.info(`✅ Seeded Product: ${product.title}`);
     } catch (e) {
       console.error(
-        `❌ GAGAL SEED PRODUK: ${dataProduct.title} (Slug: ${dataProduct.slug})`,
-        `Author Slug dicari: ${authorSlug} | Category Slug dicari: ${categorySlug}`
+        `❌ Failed Seeding Product: ${dataProduct.title} (Slug: ${dataProduct.slug})`,
+        `Author Slug search: ${authorSlug} | Category Slug search: ${categorySlug}`
       );
       throw new Error(`Data mismatch: ${dataProduct.slug}`);
     }
   }
-  console.log("--- END SEEDING PRODUCTS SUCCESSFULLY ---");
 }
 
 async function main() {

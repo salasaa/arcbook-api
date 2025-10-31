@@ -38,6 +38,7 @@ authRoute.openapi(
         data: {
           username: body.username,
           email: body.email,
+          fullName: body.fullName,
           password: {
             create: { hash },
           },
