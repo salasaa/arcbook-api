@@ -7,6 +7,7 @@ import { dataCategories } from "./data/categories";
 import { dataAuthors } from "./data/authors";
 
 async function seedCategories() {
+  // TODO: for of with upsert
   await prisma.category.createMany({
     data: dataCategories.map((category) => ({
       name: category.name,
@@ -17,6 +18,7 @@ async function seedCategories() {
 }
 
 async function seedAuthors() {
+  // TODO: for of with upsert
   await prisma.author.createMany({
     data: dataAuthors.map((author) => ({
       name: author.name,
@@ -31,7 +33,6 @@ async function seedProducts() {
     const { categorySlug, authorSlug, ...productBase } = dataProduct;
 
     try {
-      // Coba temukan Author dan Category. findUniqueOrThrow akan throw jika tidak ditemukan.
       const author = await prisma.author.findUniqueOrThrow({
         where: { slug: authorSlug.toLocaleLowerCase() },
       });
@@ -45,12 +46,15 @@ async function seedProducts() {
         categoryId: category.id,
       };
 
-      await prisma.product.upsert({
+      const product = await prisma.product.upsert({
         where: { slug: dataProduct.slug },
         update: upsertQuery,
         create: upsertQuery,
       });
+
+      console.info(`Book: ${product.title}`);
     } catch (e) {
+      // TODO: ENGLISH
       console.error(
         `❌ GAGAL SEED PRODUK: ${dataProduct.title} (Slug: ${dataProduct.slug})`,
         `Author Slug dicari: ${authorSlug} | Category Slug dicari: ${categorySlug}`
@@ -58,7 +62,6 @@ async function seedProducts() {
       throw new Error(`Data mismatch: ${dataProduct.slug}`);
     }
   }
-  console.log("--- END SEEDING PRODUCTS SUCCESSFULLY ---");
 }
 
 async function main() {
