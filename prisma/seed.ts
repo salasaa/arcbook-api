@@ -7,23 +7,35 @@ import { dataCategories } from "./data/categories";
 import { dataAuthors } from "./data/authors";
 
 async function seedCategories() {
-  await prisma.category.createMany({
-    data: dataCategories.map((category) => ({
-      name: category.name,
-      slug: category.slug.toLowerCase(),
-    })),
-    skipDuplicates: true,
-  });
+  for (const category of dataCategories) {
+    await prisma.category.upsert({
+      where: { slug: category.slug.toLocaleLowerCase() },
+      create: {
+        name: category.name,
+        slug: category.slug.toLowerCase(),
+      },
+      update: {
+        name: category.name,
+        slug: category.slug.toLowerCase(),
+      },
+    });
+  }
 }
 
 async function seedAuthors() {
-  await prisma.author.createMany({
-    data: dataAuthors.map((author) => ({
-      name: author.name,
-      slug: author.slug.toLocaleLowerCase(),
-    })),
-    skipDuplicates: true,
-  });
+  for (const author of dataAuthors) {
+    await prisma.author.upsert({
+      where: { slug: author.slug.toLocaleLowerCase() },
+      create: {
+        name: author.name,
+        slug: author.slug.toLowerCase(),
+      },
+      update: {
+        name: author.name,
+        slug: author.slug.toLowerCase(),
+      },
+    });
+  }
 }
 
 async function seedProducts() {
