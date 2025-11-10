@@ -6,6 +6,7 @@ import { categoriesRoute } from "./modules/category/routes";
 import { authorsRoute } from "./modules/author/routes";
 import { usersRoute } from "./modules/user/routes";
 import { authRoute } from "./modules/auth/routes";
+import { cartRoute } from "./modules/cart/routes";
 import { cors } from "hono/cors";
 
 const app = new OpenAPIHono();
@@ -17,6 +18,7 @@ app.route("/categories", categoriesRoute);
 app.route("/authors", authorsRoute);
 app.route("/users", usersRoute);
 app.route("/auth", authRoute);
+app.route("/cart", cartRoute);
 
 // The OpenAPI documentation
 app.doc("/openapi.json", {
