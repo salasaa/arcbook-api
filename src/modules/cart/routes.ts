@@ -75,17 +75,39 @@ cartRoute.openapi(
         return c.json({ message: "Cart not found" }, 400);
       }
 
-      const newCartItems = await db.cartItem.create({
-        data: {
+      // TODO: improve logic for existing item
+      const existingCartItem = await db.cartItem.findFirst({
+        where: {
           cartId: cart.id,
           productId: body.productId,
-          quantity: body.quantity,
         },
-        include: { product: true },
       });
 
-      return c.json(newCartItems);
+      let updateCartItem;
+
+      if (existingCartItem) {
+        updateCartItem = await db.cartItem.update({
+          where: { id: existingCartItem.id },
+          data: {
+            quantity: existingCartItem.quantity + body.quantity,
+          },
+          include: { product: true },
+        });
+      } else {
+        updateCartItem = await db.cartItem.create({
+          data: {
+            cartId: cart.id,
+            productId: body.productId,
+            quantity: body.quantity,
+          },
+          include: { product: true },
+        });
+      }
+
+      return c.json(updateCartItem);
     } catch (error) {
+      console.error("Cart item processing error:", error);
+
       return c.json({ message: "Failed to add item to cart" }, 400);
     }
   }
