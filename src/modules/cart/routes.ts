@@ -43,10 +43,10 @@ cartRoute.openapi(
   }
 );
 
-// POST /cart/items
+// PUT /cart/items
 cartRoute.openapi(
   createRoute({
-    method: "post",
+    method: "put",
     path: "/items",
     middleware: checkAuthorized,
     request: {
